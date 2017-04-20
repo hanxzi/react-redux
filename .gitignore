@@ -1,4 +1,32 @@
+# ignore packages installed by npm
+node_modules/
+
+# ignore webstrom config 
+.idea
+.bak
+
+# igonre tar.gz file
+.tar.gz
+
+
+
 .DS_Store
-*.log
-node_modules
-dist
+
+#ignore thumbnails created by windows
+Thumbs.db
+
+# ignore server config
+private_config
+
+#tmp file
+
+tmp/
+
+
+# ide files
+
+.idea/
+
+#测试报告文件
+mochaawesome-reports/
+
