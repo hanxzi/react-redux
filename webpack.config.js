@@ -1,36 +1,42 @@
-var path = require('path')
-var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+var path = require('path');
+var webpack = require('webpack');
+
 module.exports= {
     devtool: 'cheap-module-eval-source-map',
-    entry:[
-        'webpack-hot-middleware/client',
+    entry:  [
+        'webpack-hot-middleware/client?path=http://localhost:3011/__webpack_hmr&reload=true&noInfo=false&quiet=false',
         './index.js'
     ],
     output: {
-        path: path.join(__dirname,'dist'),
         filename:'bundle.js',
+        path:path.join(__dirname, 'dist'),
         publicPath: '/static/'
     },
-    plugins:[
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin()
-    ],
-    node: {
-        fs: "empty"
+
+    devServer: {
+        hot: true,
+        contentBase:path.join(__dirname, 'dist'),
+        publicPath: '/'
     },
+
+    plugins: [
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
+    ],
+
     module: {
-        loaders: [
+        rules: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loaders: ['babel-loader'],
-                include: __dirname
+                test: /\.jsx?$/,
+                use: [ 'babel-loader'],
+                exclude: /node_modules/
             },
             {
-                test:/\.css$/,
-                loaders: ['style','css']
-            }
-        ]
-    }
+                test: /\.css$/,
+                use: [ 'style-loader', 'css-loader?modules'],
+            },
+        ],
+    },
+
 }
